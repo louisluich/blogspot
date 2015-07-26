@@ -21,12 +21,23 @@ var month2 = ["January", "February", "March", "April", "May", "June", "July", "A
 var myjson;
 
 function mycallback(json) {
-	console.log("------>");
-	console.log(json);
-	console.log("<------");
-
-	myjson = json;
+	
 	loadtoc(json);
+
+	// var total = parseInt(json.feed.openSearch$totalResults.$t);
+
+	// if(json.feed.entry.length < total) {
+
+	// }
+
+
+//	 <script src="http://oldjimpacific.blogspot.hk/feeds/posts/summary?max-results=500&amp;alt=json-in-script&amp;callback=mycallback"></script>
+	 
+}
+
+function output(json) {
+
+	console.log(json);
 }
 
 function loadtoc(a) {
