@@ -66,7 +66,7 @@ function loadtoc(a) {
 	sortlabel();
 	tocLoaded = true;
 	displayToc2();
-	document.write('<br/><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 8px; text-decoration:none; color: #616469;">Back to Top</a></br/>');
+	document.write('<br/><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></br/>');
 }
 
 function filterPosts(a) {
