@@ -12,6 +12,12 @@ var tocLoaded = false;
 var numChars = 250;
 var postFilter = "";
 var numberfeed = 0;
+var ajax = '<div class="ajax_loading" style="text-align: center; width:50px;height: 50px;margin: 50px auto;"><img src="https://cdn.rawgit.com/louisluich/blogspot/master/ajax-loader.gif" style="width: 100%;height: 100%; box-shadow: none; border: 0px; padding: 0px;"></div>';
+
+
+var x = document.getElementsByClassName("post-header-line-1")[0];
+x.innerHTML = ajax;
+
 
 function loadtoc(a) {
 
@@ -286,6 +292,8 @@ function displayToc2() {
 			break
 		}
 	}
+
+	document.getElementsByClassName("ajax_loading").remove();
 }
 
 function toggleTitleSort() {
@@ -332,3 +340,14 @@ function looptemp2() {
 		document.write("<br>")
 	}
 };
+
+Element.prototype.remove = function() {
+	this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+	for (var i = this.length - 1; i >= 0; i--) {
+		if (this[i] && this[i].parentElement) {
+			this[i].parentElement.removeChild(this[i]);
+		}
+	}
+}

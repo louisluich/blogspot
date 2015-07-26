@@ -25,7 +25,7 @@ var increment = 100;
 var startIndex = 1;
 var totalJSON = [];
 
-var ajax = '<div class="ajax_loading" style="text-align: center; width:50px;height: 50px;margin: 50px auto;"><img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="width: 100%;height: 100%; box-shadow: none; border: 0px; padding: 0px;"></div>';
+var ajax = '<div class="ajax_loading" style="text-align: center; width:50px;height: 50px;margin: 50px auto;"><img src="https://cdn.rawgit.com/louisluich/blogspot/master/ajax-loader.gif" style="width: 100%;height: 100%; box-shadow: none; border: 0px; padding: 0px;"></div>';
 var load_more = '<div class=\'load_more\' onclick=\'startCount()\' style=\'  text-align: center; font-size: 16px; margin: 30px 0px; display: block;\'><a href=\'javascript:void(0)\'>Load More</a></div>';
 var back_to_top = '<div class=\'back_to_top\' style="margin: 20px auto;"><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></div>';
 
