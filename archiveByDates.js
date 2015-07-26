@@ -19,6 +19,13 @@ var postFilter = "";
 var numberfeed = 0;
 var month2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+function mycallback(json) {
+	console.log("------>");
+	console.log(json);
+	console.log("<------");
+	loadtoc(json);
+}
+
 function loadtoc(a) {
 	function b() {
 		if ("entry" in a.feed) {
