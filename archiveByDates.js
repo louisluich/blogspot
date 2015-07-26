@@ -18,11 +18,14 @@ var numChars = 250;
 var postFilter = "";
 var numberfeed = 0;
 var month2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var myjson;
 
 function mycallback(json) {
 	console.log("------>");
 	console.log(json);
 	console.log("<------");
+
+	myjson = json;
 	loadtoc(json);
 }
 
