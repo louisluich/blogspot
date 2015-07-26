@@ -35,7 +35,11 @@ function mycallback(json) {
 	 
 }
 
-function output(json) {
+function myoutput3() {
+	console.log("myoutput3");
+}
+
+function myoutput2(json) {
 
 	console.log(json);
 }
