@@ -14,7 +14,7 @@ var postFilter = "";
 var numberfeed = 0;
 
 function loadtoc(a) {
-	console.log(a);
+
 	function b() {
 		if ("entry" in a.feed) {
 			var d = a.feed.entry.length;
