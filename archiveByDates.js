@@ -1,5 +1,8 @@
-// Thanks for Abu Farhan
-// original from http://www.abu-farhan.com
+// Thanks for Abu Farhan original from http://www.abu-farhan.com
+// Revised by Louis Lui
+// add blogspot max-result 500+
+// add back to top
+// add load more icon
 
 var postTitle = new Array();
 var postUrl = new Array();
@@ -18,33 +21,68 @@ var numChars = 250;
 var postFilter = "";
 var numberfeed = 0;
 var month2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var myjson;
+var increment = 100;
+var startIndex = 1;
+var totalJSON = [];
 
-function mycallback(json) {
-	
-	loadtoc(json);
+var ajax = '<div class="ajax_loading" style="text-align: center; width:50px;height: 50px;margin: 50px auto;"><img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="width: 100%;height: 100%; box-shadow: none; border: 0px; padding: 0px;"></div>';
+var load_more = '<div class=\'load_more\' onclick=\'startCount()\' style=\'  text-align: center; font-size: 16px; margin: 30px 0px; display: block;\'><a href=\'javascript:void(0)\'>Load More</a></div>';
+var back_to_top = '<div class=\'back_to_top\' style="margin: 20px auto;"><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></div>';
 
-	// var total = parseInt(json.feed.openSearch$totalResults.$t);
+var x = document.getElementsByClassName("post-header-line-1")[0];
+x.innerHTML = ajax;
 
-	// if(json.feed.entry.length < total) {
+var totalResults;
+var currentStartIndex;
 
-	// }
+window.onload = function(e) {
+	startCount();
+};
 
+function startCount() {
 
-//	 <script src="http://oldjimpacific.blogspot.hk/feeds/posts/summary?max-results=500&amp;alt=json-in-script&amp;callback=mycallback"></script>
-	 
+	if ($(".load_more").length) {
+		$(".load_more").html("").append(ajax);
+	}
+
+	var script = document.createElement('script');
+
+	script.src = "http://oldjimpacific.blogspot.hk/feeds/posts/summary?max-results=" + increment + "&alt=json-in-script&callback=myIncrement&start-index=" + startIndex;
+
+	document.body.appendChild(script);
 }
 
-function myoutput3() {
-	console.log("myoutput3");
-}
+function myIncrement(json) {
 
-function myoutput2(json) {
+	totalResults = parseInt(json.feed.openSearch$totalResults.$t);
+	currentStartIndex = parseInt(json.feed.openSearch$startIndex.$t);
 
-	console.log(json);
+	var totalJSON = [];
+
+	totalJSON = totalJSON.concat(json.feed.entry);
+	startIndex = startIndex + increment;
+
+	var tmp = {};
+	var feed = {};
+	feed.entry = totalJSON;
+	tmp.feed = feed;
+
+	var x = document.getElementsByClassName("post-header-line-1")[0];
+	x.innerHTML = '';
+
+	loadtoc(tmp);
 }
 
 function loadtoc(a) {
+
+	postTitle = new Array();
+	postDate = new Array();
+	postUrl = new Array();
+	postYearMonth = new Array();
+	postYearMonth2 = new Array();
+	postTanggal = new Array();
+
+
 	function b() {
 		if ("entry" in a.feed) {
 			var d = a.feed.entry.length;
@@ -83,28 +121,51 @@ function loadtoc(a) {
 	}
 	b();
 	displayToc2();
-	//document.write('<br/><a href="http://www.abu-farhan.com" style="font-size: 8px; text-decoration:none; color: #616469;">Widget by Abu Farhan</a></br/>')
-	document.write('<br/><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></br/>')
 }
 
 function displayToc2() {
 	var a = 0;
 	var b = 0;
+	var html = '';
 	while (b < postTitle.length) {
 		temp1 = postYearMonth[b];
-		document.write("<p/>");
-		document.write('<p><a href="' + postYearMonth2[b] + '">' + temp1 + "</a></p><ul>");
+		html = html + "<p/>";
+		html = html + '<p><a href="' + postYearMonth2[b] + '">' + temp1 + "</a></p><ul>";
+
 		firsti = a;
 		do {
-			document.write("<li>");
-			document.write("[" + postTanggal[a] + '] <a href="' + postUrl[a] + '">' + postTitle[a] + "</a>");
-			document.write("</li>");
+
+			html = html + "<li>";
+			html = html + "[" + postTanggal[a] + '] <a href="' + postUrl[a] + '">' + postTitle[a] + "</a>";
+			html = html + "</li>";
+
 			a = a + 1
 		} while (postYearMonth[a] == temp1);
 		b = a;
-		document.write("</ul>");
+		html = html + "</ul>";
 		if (b > postTitle.length) {
 			break
 		}
 	}
-};
+
+	if ((currentStartIndex + increment) >= totalResults) {
+
+	} else {
+
+		html += load_more;
+	}
+
+	var div = document.createElement('div');
+
+	div.className = 'row';
+	div.innerHTML = html;
+
+	jQuery("#TOC_date_inPost").append(div).promise().done(function() {
+
+		$(".ajax_loading").remove();
+
+		if(!$(".back_to_top").length) {
+			$(".post-footer").before(back_to_top);
+		}		
+	});
+}
