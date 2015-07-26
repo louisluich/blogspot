@@ -1,4 +1,5 @@
-//http://www.abu-farhan.com
+// Thanks for Abu Farhan
+// original from http://www.abu-farhan.com
 
 var postTitle = new Array();
 var postUrl = new Array();
