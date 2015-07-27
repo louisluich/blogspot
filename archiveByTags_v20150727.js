@@ -1,6 +1,5 @@
 // Thanks for Abu Farhan
 // original from http://www.abu-farhan.com
-var blogger_url = "wongleona";
 
 var postTitle = new Array();
 var postUrl = new Array();
