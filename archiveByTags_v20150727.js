@@ -1,6 +1,11 @@
 // Thanks for Abu Farhan
 // original from http://www.abu-farhan.com
 
+// revised by LL
+// dynamic blogger url
+// ajax loading icon before content load
+// only include 1 js file
+
 var postTitle = new Array();
 var postUrl = new Array();
 var postMp3 = new Array();
@@ -13,15 +18,18 @@ var numChars = 250;
 var postFilter = "";
 var numberfeed = 0;
 var ajax = '<div class="ajax_loading" style="text-align: center; width:50px;height: 50px;margin: 50px auto;"><img src="https://cdn.rawgit.com/louisluich/blogspot/master/ajax-loader.gif" style="width: 100%;height: 100%; box-shadow: none; border: 0px; padding: 0px;"></div>';
+var back_to_top = '<div class=\'back_to_top\' style="margin: 20px auto;"><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></div>';
 var x = document.getElementsByClassName("post-header-line-1")[0];
 x.innerHTML = ajax;
 
 window.onload = function(e) {
 
 	var script = document.createElement('script');
+	script.src = "https://code.jquery.com/jquery-1.11.3.min.js";
+	document.body.appendChild(script);
 
-	script.src = "http://" + blogger_url + ".blogspot.hk/feeds/posts/summary?max-results=1000&amp;alt=json-in-script&amp;callback=loadtoc";
-
+	var script = document.createElement('script');
+	script.src = "http://" + blogger_url + ".blogspot.hk/feeds/posts/summary?max-results=1000&alt=json-in-script&callback=loadtoc";
 	document.body.appendChild(script);
 }
 
@@ -80,7 +88,8 @@ function loadtoc(a) {
 	sortlabel();
 	tocLoaded = true;
 	displayToc2();
-	document.write('<br/><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></br/>');
+	//document.write('<br/><a href="javascript:void(0)" onclick="scroll(0,0)" style="font-size: 14px; text-decoration:none; color: #616469;">Back to Top</a></br/>');
+	$(".post-footer").before(back_to_top);
 }
 
 function filterPosts(a) {
@@ -263,26 +272,33 @@ function displayToc(a) {
 }
 
 function displayToc2() {
+	var tmp = '';
 	var a = 0;
 	var b = 0;
 	while (b < postTitle.length) {
 		temp1 = postLabels[b];
 		if (temp1.indexOf("Ustadz") == -1) {
 			if (temp1.indexOf("Syeikh") == -1) {
-				document.write("<p/>");
-				document.write('<p><a href="/search/label/' + temp1 + '">' + temp1 + "</a></p><ol>")
+				// document.write("<p/>");
+				// document.write('<p><a href="/search/label/' + temp1 + '">' + temp1 + "</a></p><ol>")
+				tmp += "<p/>";
+				tmp += '<p><a href="/search/label/' + temp1 + '">' + temp1 + "</a></p><ol>";
 			}
 		}
 		firsti = a;
 		do {
 			if (temp1.indexOf("Ustadz") == -1) {
 				if (temp1.indexOf("Syeikh") == -1) {
-					document.write("<li>");
-					document.write('<a href="' + postUrl[a] + '">' + postTitle[a] + "</a>");
+					//document.write("<li>");
+					//document.write('<a href="' + postUrl[a] + '">' + postTitle[a] + "</a>");
+					tmp += "<li>";
+					tmp += '<a href="' + postUrl[a] + '">' + postTitle[a] + "</a>";
 					if (postBaru[a] == true) {
-						document.write(' - <strong><em><span style="color: rgb(255, 0, 0);">New !!</span> </em></strong>')
+						//document.write(' - <strong><em><span style="color: rgb(255, 0, 0);">New !!</span> </em></strong>')
+						tmp += ' - <strong><em><span style="color: rgb(255, 0, 0);">New !!</span> </em></strong>';
 					}
-					document.write("</li>")
+					//document.write("</li>")
+					tmp += "</li>";
 				}
 			}
 			a = a + 1
@@ -290,7 +306,8 @@ function displayToc2() {
 		b = a;
 		if (temp1.indexOf("Ustadz") == -1) {
 			if (temp1.indexOf("Syeikh") == -1) {
-				document.write("</ol>")
+				//document.write("</ol>")
+				tmp += "</ol>";
 			}
 		}
 		sortPosts2(firsti, a);
@@ -298,7 +315,7 @@ function displayToc2() {
 			break
 		}
 	}
-
+	jQuery("#TOC_date_inPost").append(tmp).promise().done(function() {});
 	document.getElementsByClassName("ajax_loading").remove();
 }
 
@@ -350,6 +367,7 @@ function looptemp2() {
 Element.prototype.remove = function() {
 	this.parentElement.removeChild(this);
 }
+
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 	for (var i = this.length - 1; i >= 0; i--) {
 		if (this[i] && this[i].parentElement) {

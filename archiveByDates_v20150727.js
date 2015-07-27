@@ -35,12 +35,19 @@ x.innerHTML = ajax;
 var totalResults;
 var currentStartIndex;
 
-var blogger_url = "wongleona";
-
 
 window.onload = function(e) {
 
-	startCount();
+	var script = document.createElement('script');
+	script.src = "https://code.jquery.com/jquery-1.11.3.min.js";
+	document.body.appendChild(script);
+
+	// startCount();
+	var script = document.createElement('script');
+
+	script.src = "http://" + blogger_url + ".blogspot.hk/feeds/posts/summary?max-results=" + increment + "&alt=json-in-script&callback=myIncrement&start-index=" + startIndex;
+
+	document.body.appendChild(script);
 };
 
 function startCount() {
@@ -164,7 +171,7 @@ function displayToc2() {
 	div.className = 'row';
 	div.innerHTML = html;
 
-	jQuery("#TOC_date_inPost").append(div).promise().done(function() {
+	$("#TOC_date_inPost").append(div).promise().done(function() {
 
 		$(".ajax_loading").remove();
 
