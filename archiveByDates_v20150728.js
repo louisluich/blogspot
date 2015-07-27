@@ -36,18 +36,20 @@ var totalResults;
 var currentStartIndex;
 
 
+function defer(method) {
+    if (window.jQuery)
+        method();
+    else
+        setTimeout(function() { defer(method) }, 50);
+}
+
 window.onload = function(e) {
 
 	var script = document.createElement('script');
 	script.src = "https://code.jquery.com/jquery-1.11.3.min.js";
 	document.body.appendChild(script);
 
-	// startCount();
-	var script = document.createElement('script');
-
-	script.src = "http://" + blogger_url + ".blogspot.hk/feeds/posts/summary?max-results=" + increment + "&alt=json-in-script&callback=myIncrement&start-index=" + startIndex;
-
-	document.body.appendChild(script);
+	defer(startCount);	
 };
 
 function startCount() {
