@@ -149,7 +149,7 @@ function displayToc2() {
 		do {
 
 			html = html + "<li>";
-			html = html + "[" + postTanggal[a] + '] <a href="' + postUrl[a] + '">' + postTitle[a] + "</a>";
+			html = html + "[" + postTanggal[a] + '] <a target="_blank" href="' + postUrl[a] + '">' + postTitle[a] + "</a>";
 			html = html + "</li>";
 
 			a = a + 1
