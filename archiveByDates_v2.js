@@ -157,7 +157,7 @@ function displayToc2() {
 		b = a;
 		html = html + "</ul>";
 		if (b > postTitle.length) {
-			break
+			break 
 		}
 	}
 
